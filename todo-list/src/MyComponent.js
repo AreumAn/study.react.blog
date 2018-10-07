@@ -9,12 +9,14 @@ class MyComponent extends Component {
     }
     /* props type set up 2 */
     static propTypes = {
-        name: PropTypes.string
+        name: PropTypes.string,
+        age: PropTypes.number.isRequired
     }
     render() {
         return (
             <div>
-                Hi, my name is {this.props.name}.
+                Hi, my name is {this.props.name}.<br />
+                I am {this.props.age}.
             </div>
         );
     }
