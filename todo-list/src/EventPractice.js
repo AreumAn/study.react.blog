@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 
 class EventPractice extends Component {
-    
+
     state = {
+        username: '',
         message: ''
     }
 
     handleChange = (e) => {
         this.setState({
-            message: e.target.value
+            [e.target.name]: e.target.value
         });
     }
 
     handleClick = () => {
-        alert(this.state.message);
+        alert(this.state.username + " : " + this.state.message);
         this.setState({
+            username: '',
             message: ''
         });
     }
@@ -24,15 +26,21 @@ class EventPractice extends Component {
         return (
             <div>
                 <h1>Event Practice</h1>
-                <input 
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="your name"
+                    value={this.state.username}
+                    onChange={this.handleChange} />
+                <input
                     type="text"
                     name="message"
                     placeholder="Whatever you want"
                     value={this.state.message}
-                    onChange={this.handleChange}/>
-                    <button onClick={this.handleClick}
-                    >submit</button>
-                    <p>{this.state.message}</p>
+                    onChange={this.handleChange} />
+                <button onClick={this.handleClick}
+                >submit</button>
+                <p>{this.state.message}</p>
             </div>
         );
     }
