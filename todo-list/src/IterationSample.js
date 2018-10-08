@@ -24,10 +24,13 @@ class IterationSample extends Component {
         const { names } = this.state;
 
         this.setState({
-            names: [
-                ...names.slice(0, index),
-                ...names.slice(index + 1, names.length)
-            ]
+            names: names.filter((item, i) => i !== index)
+
+            /* map */
+            // names: [
+            //     ...names.slice(0, index),
+            //     ...names.slice(index + 1, names.length)
+            // ]
         })
     }
 
