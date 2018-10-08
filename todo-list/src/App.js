@@ -6,6 +6,7 @@ import ValidationSample from './ValidationSample';
 import ScrollBox from './ScrollBox';
 import IterationSample from './IterationSample';
 import LifeCycleSample from './LifeCycleSample';
+import FunctionalComp from './FunctionalComp';
 
 
 function getRandomColor() {
@@ -25,6 +26,8 @@ class App extends Component {
   render() {
     return (
       <div>
+        <FunctionalComp name='Functional Component' />
+        <hr />
         <button onClick={this.handleClick}>Random Color</button>
         <LifeCycleSample color={this.state.color} />
         <hr />
