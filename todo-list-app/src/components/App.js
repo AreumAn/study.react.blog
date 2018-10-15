@@ -3,14 +3,15 @@ import PageTemplate from './PageTemplate';
 import TodoInput from './TodoInput';
 import TodoList from './TodoList';
 
+const initialTodos = new Array(500).fill(0).map(
+    (foo, index) => ({id: index, text: `data ${index}`, done: false})
+);
+
 class App extends Component {
 
     state = {
         input: '',
-        todos: [
-            {id:0, text:'Study React', done: true},
-            {id:1, text:'Componect Styling!!', done: false}
-        ]
+        todos: initialTodos,
     }
 
     id=1
