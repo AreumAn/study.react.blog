@@ -4,6 +4,7 @@ import { Link, Route } from 'react-router-dom';
 
 
 const Posts = ({match}) => {
+    console.log('Posts', match);
     return(
         <div>
             <h3>List</h3>
