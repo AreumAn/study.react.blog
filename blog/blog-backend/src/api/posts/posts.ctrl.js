@@ -61,7 +61,14 @@ exports.read = async (ctx) => {
     DELETE /api/posts/:id
 */
 
-exports.remove = (ctx) => {
+exports.remove = async (ctx) => {
+    const { id } = ctx.params;
+    try {
+        await Post.findByIdAndRemove(id).exec();
+        ctx.status = 204;
+    } catch (e) {
+        ctx.throw(e, 500);
+    }
 };
 
 /*
@@ -69,5 +76,19 @@ exports.remove = (ctx) => {
     PATCH /api/posts/:id
 */
 
-exports.update = (ctx) => {
+exports.update = async (ctx) => {
+    const { id } = ctx.params;
+    try {
+        const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
+            new: true
+        }).exec();
+
+        if(!post) {
+            ctx.status = 404;
+            return;
+        }
+        ctx.body = post;
+    } catch (e) {
+        ctx.throw(e, 500);
+    }
 };
