@@ -5,6 +5,7 @@ module.exports = {
         "comma-dangle": 0,
         "eol-last" : 0,
         "no-console": 0,
-        "indent": 0
+        "indent": 0,
+        "keyword-spacing": 0
     }
 };
