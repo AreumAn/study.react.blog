@@ -42,7 +42,18 @@ exports.list = async (ctx) => {
     GET /api/posts/:id
 */
 
-exports.read = (ctx) => {
+exports.read = async (ctx) => {
+    const { id } = ctx.params;
+    try {
+        const post = await Post.findById(id).exec();
+        if(!post) {
+            ctx.status = 404;
+            return;
+        }
+        ctx.body = post;
+    } catch (e) {
+        ctx.throw(e, 500);
+    }
 };
 
 /*
