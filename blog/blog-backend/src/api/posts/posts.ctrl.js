@@ -76,7 +76,8 @@ exports.list = async (ctx) => {
             ...post.toJSON(),
             body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`
         });
-
+        ctx.body = posts.map(limitBodyLength);
+        
         ctx.set('Last-Page', Math.ceil(postCount / 10));
         ctx.body = posts;
     } catch (e) {
