@@ -27,7 +27,13 @@ exports.write = async (ctx) => {
     GET /api/posts
 */
 
-exports.list = (ctx) => {
+exports.list = async (ctx) => {
+    try {
+        const posts = await Post.find().exec();
+        ctx.body = posts;
+    } catch (e) {
+        ctx.throw(e, 500);
+    }
 };
 
 
