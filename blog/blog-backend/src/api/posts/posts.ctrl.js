@@ -1,13 +1,4 @@
-let postId = 1;
-
-const posts = [
-    {
-        id: 1,
-        title: 'This is title',
-     body: 'This is body'
-    }
-];
-
+const Post = require('../../models/post');
 
 /*
     Write Post
@@ -15,17 +6,19 @@ const posts = [
     {title, body}
 */
 
-exports.write = (ctx) => {
-    const {
-        title,
-        body
-    } = ctx.request.body;
+exports.write = async (ctx) => {
+    const { title, body, tags } = ctx.request.body;
 
-    postId += 1;
+    const post = new Post({
+        title, body, tags
+    });
 
-    const post = { id: postId, title, body };
-    posts.push(post);
-    ctx.body = post;
+    try {
+        await post.save(); // register in database
+        ctx.body = post; // return saved result
+    } catch(e) {
+        ctx.throw(e, 500);
+    }
 };
 
 
@@ -35,7 +28,6 @@ exports.write = (ctx) => {
 */
 
 exports.list = (ctx) => {
-    ctx.body = posts;
 };
 
 
@@ -45,18 +37,6 @@ exports.list = (ctx) => {
 */
 
 exports.read = (ctx) => {
-    const { id } = ctx.params;
-
-    const post = posts.find(p => p.id.toString() === id);
-
-    if(!post) {
-        ctx.status = 404;
-        ctx.body = {
-            message: 'No Post!'
-        };
-        return;
-    }
-    ctx.body = post;
 };
 
 /*
@@ -65,45 +45,6 @@ exports.read = (ctx) => {
 */
 
 exports.remove = (ctx) => {
-    const { id } = ctx.params;
-
-    const index = posts.findIndex(p => p.id.toString() === id);
-
-    if(index === -1) {
-        ctx.status = 404;
-        ctx.body = {
-            message: 'No Post!!'
-        };
-        return;
-    }
-
-    posts.splice(index, 1);
-    ctx.status = 204;
-};
-
-/*
-    Replace Post
-    PUT /api/posts/:id
-    { title, body }
-*/
-exports.replace = (ctx) => {
-    const { id } = ctx.params;
-
-    const index = posts.findIndex(p => p.id.toString() === id);
-
-    if(index === -1) {
-        ctx.status = 404;
-        ctx.body = {
-            message: 'No Post!'
-        };
-        return;
-    }
-
-    posts[index] = {
-        id,
-        ...ctx.request.body
-    };
-    ctx.body = posts[index];
 };
 
 /*
@@ -112,22 +53,4 @@ exports.replace = (ctx) => {
 */
 
 exports.update = (ctx) => {
-    const { id } = ctx.params;
-
-    const index = posts.findIndex(p => p.id.toString() === id);
-
-    if(index === -1) {
-        ctx.status = 404;
-        ctx.body = {
-            message: 'No Post!'
-        };
-        return;
-    }
-
-    posts[index] = {
-        ...posts[index],
-        ...ctx.request.body
-    };
-
-    ctx.body = posts[index];
 };
