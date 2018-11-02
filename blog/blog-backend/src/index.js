@@ -9,8 +9,14 @@ router.get('/', (ctx) => {
     ctx.body = 'Home';
 });
 
-router.get('/about', (ctx) => {
-    ctx.body = 'About';
+router.get('/about/:name?', (ctx) => {
+    const { name } = ctx.params;
+    ctx.body = name ? `About ${name}` : 'About';
+});
+
+router.get('/posts', (ctx) => {
+    const { id } = ctx.query;
+    ctx.body = id ? `POST  ##${id}` : 'No Post ID';
 });
 
 app.use(router.routes()).use(router.allowedMethods());
