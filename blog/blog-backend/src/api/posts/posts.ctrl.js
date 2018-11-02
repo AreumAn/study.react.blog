@@ -69,15 +69,15 @@ exports.list = async (ctx) => {
             .sort({ _id: -1 })
             .limit(10)
             .skip((page - 1) * 10)
+            .lean()
             .exec();
         const postCount = await Post.count().exec();
 
         const limitBodyLength = post => ({
-            ...post.toJSON(),
+            ...post,
             body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`
         });
         ctx.body = posts.map(limitBodyLength);
-        
         ctx.set('Last-Page', Math.ceil(postCount / 10));
         ctx.body = posts;
     } catch (e) {
