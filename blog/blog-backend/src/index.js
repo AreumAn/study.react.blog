@@ -3,16 +3,24 @@ require('dotenv').config();
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-
+const mongoose = require('mongoose');
 const api = require('./api');
+
+const app = new Koa();
+const router = new Router();
 
 const {
     PORT: port = 4000,
     MONGO_URI: mongoURI
   } = process.env;
 
-const app = new Koa();
-const router = new Router();
+
+mongoose.Promise = global.Promise; // Node의 Promise를 사용하도록 설정
+mongoose.connect(mongoURI).then(() => {
+  console.log('connected to mongodb');
+}).catch((e) => {
+  console.error(e);
+});
 
 router.use('/api', api.routes());
 
