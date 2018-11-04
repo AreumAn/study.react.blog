@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Header.scss';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
+import Button from '../Button/Button';
 
 const cx = classNames.bind(styles);
 
@@ -12,8 +13,7 @@ const Header = () => (
                 <Link to="/">Areum React!</Link>
             </div>
             <div className={cx('right')} >
-                { /* Button rendering by conditions */}
-                Right
+                <Button theme="outline" to="/editor"> Write POST</Button>
             </div>
         </div>
     </header>
